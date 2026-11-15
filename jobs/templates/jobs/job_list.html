@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Jobs</h2>
+{% if user.profile.role == "alumni" and user.profile.is_verified %}
+  <p><a href="{% url 'job_create' %}">+ Post a job</a></p>
+{% endif %}
+
+{% for j in jobs %}
+  <div>
+    <strong><a href="{% url 'job_detail' j.pk %}">{{ j.title }}</a></strong>
+    — {{ j.company }}, {{ j.location }}
+  </div>
+{% empty %}
+  <p>No jobs posted yet.</p>
+{% endfor %}
+{% endblock %}

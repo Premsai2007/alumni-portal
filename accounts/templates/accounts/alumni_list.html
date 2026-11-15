@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Alumni Directory</h2>
+
+<form method="get">
+  <input name="name" placeholder="Name" value="{{ filters.name }}">
+  <input name="batch" placeholder="Batch (e.g. 2020)" value="{{ filters.batch }}">
+  <input name="department" placeholder="Department" value="{{ filters.department }}">
+  <input name="company" placeholder="Company" value="{{ filters.company }}">
+  <input name="skills" placeholder="Skills" value="{{ filters.skills }}">
+  <button type="submit">Search</button>
+  <a href="{% url 'alumni_list' %}">Clear</a>
+</form>
+
+{% for p in page_obj %}
+<div>
+  <strong>{{ p.user.get_full_name|default:p.user.username }}</strong>
+  — {{ p.department }}, Batch {{ p.batch_year }}<br>
+  {{ p.designation }} at {{ p.company }} | Skills: {{ p.skills }}
+
+  <form method="post" action="{% url 'send_request' p.user.id %}">
+    {% csrf_token %}
+    <input type="text" name="message" placeholder="Short message">
+    <button type="submit">Request Mentorship</button>
+  </form>
+</div>
+{% empty %}
+  <p>No verified alumni match your search.</p>
+{% endfor %}
+
+<div>
+  {% if page_obj.has_previous %}
+    <a href="?{{ querystring }}&page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  {% if page_obj.has_next %}
+    <a href="?{{ querystring }}&page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</div>
+{% endblock %}

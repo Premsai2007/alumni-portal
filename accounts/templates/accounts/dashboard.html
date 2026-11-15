@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Dashboard</h2>
+
+{% if my_applications is not None %}
+  <h3>My applications</h3>
+  {% for a in my_applications %}
+    <p>{{ a.job.title }} at {{ a.job.company }} (applied {{ a.applied_at|date:"d M Y" }})</p>
+  {% empty %}<p>No applications yet.</p>{% endfor %}
+{% endif %}
+
+{% if my_jobs is not None %}
+  <h3>My job posts</h3>
+  {% for j in my_jobs %}
+    <p>{{ j.title }}: <a href="{% url 'job_applications' j.pk %}">{{ j.app_count }} application(s)</a></p>
+  {% empty %}<p>You haven't posted any jobs.</p>{% endfor %}
+{% endif %}
+
+<h3>My events</h3>
+{% for r in my_events %}
+  <p>{{ r.event.title }}, {{ r.event.date|date:"d M Y, H:i" }}</p>
+{% empty %}<p>No event registrations yet.</p>{% endfor %}
+{% endblock %}

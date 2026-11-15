@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ job.title }}</h2>
+<p><strong>{{ job.company }}</strong> | {{ job.location }}</p>
+<p>{{ job.description }}</p>
+<p>Skills: {{ job.skills_required }}</p>
+<p>Posted by: {{ job.posted_by.username }}</p>
+
+{% if user.profile.role == "student" %}
+  {% if already_applied %}
+    <p><em>You have already applied.</em></p>
+  {% else %}
+    <form method="post" action="{% url 'job_apply' job.pk %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Apply</button>
+    </form>
+  {% endif %}
+{% endif %}
+
+{% if user == job.posted_by %}
+  <p><a href="{% url 'job_applications' job.pk %}">View applications</a></p>
+{% endif %}
+
+<a href="{% url 'job_list' %}">Back to jobs</a>
+{% endblock %}

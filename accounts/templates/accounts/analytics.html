@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Analytics</h2>
+{% for key, chart in charts.items %}
+  <div style="margin-bottom:40px">{{ chart|safe }}</div>
+{% empty %}<p>No data yet. Add some alumni first.</p>{% endfor %}
+{% endblock %}

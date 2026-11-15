@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ profile_user.username }}
+  ({{ profile.get_role_display }}{% if profile.role == 'alumni' %}
+   – {% if profile.is_verified %}Verified{% else %}Unverified{% endif %}{% endif %})</h2>
+
+{% if profile.photo %}<img src="{{ profile.photo.url }}" width="150">{% endif %}
+<p><b>Batch:</b> {{ profile.batch_year }}</p>
+<p><b>Department:</b> {{ profile.department }}</p>
+<p><b>Company:</b> {{ profile.company }}</p>
+<p><b>Designation:</b> {{ profile.designation }}</p>
+<p><b>Skills:</b> {{ profile.skills }}</p>
+<p><b>Location:</b> {{ profile.location }}</p>
+<p><b>Bio:</b> {{ profile.bio }}</p>
+
+{% if is_own %}<a href="{% url 'profile_edit' %}">Edit profile</a>{% endif %}
+{% endblock %}

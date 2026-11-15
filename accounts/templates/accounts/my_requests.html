@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mentorship Requests</h2>
+
+<h3>Requests I sent</h3>
+{% for r in sent %}
+  <p>{{ r.alumnus.get_full_name|default:r.alumnus.username }}: <b>{{ r.status }}</b></p>
+{% empty %}<p>None yet.</p>{% endfor %}
+
+<h3>Requests I received</h3>
+{% for r in received %}
+  <p>{{ r.student.get_full_name|default:r.student.username }}: "{{ r.message }}" (<b>{{ r.status }}</b>)
+    {% if r.status == "pending" %}
+      <a href="{% url 'respond_request' r.id 'accepted' %}">Accept</a> |
+      <a href="{% url 'respond_request' r.id 'rejected' %}">Reject</a>
+    {% endif %}
+  </p>
+{% empty %}<p>None yet.</p>{% endfor %}
+{% endblock %}

@@ -1,0 +1,4 @@
+<h1>Admin Dashboard</h1>
+{% for key, chart in charts.items %}
+  <div style="margin-bottom:40px">{{ chart|safe }}</div>
+{% empty %}<p>No data yet. Add some alumni first.</p>{% endfor %}

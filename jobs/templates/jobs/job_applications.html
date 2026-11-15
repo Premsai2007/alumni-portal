@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Applications for {{ job.title }}</h2>
+{% for a in apps %}
+  <div>
+    <strong>{{ a.applicant.username }}</strong>
+    ({{ a.applied_at|date:"d M Y, H:i" }})<br>
+    {{ a.cover_note|default:"(no note)" }}
+  </div>
+{% empty %}
+  <p>No applications yet.</p>
+{% endfor %}
+<a href="{% url 'job_list' %}">Back to jobs</a>
+{% endblock %}

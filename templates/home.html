@@ -8,3 +8,29 @@
     <p class="lead">Reconnect with fellow alumni, find job opportunities, and stay updated on upcoming events.</p>
 </div>
 {% endblock %}
+<h3>Announcements</h3>
+{% for a in announcements %}
+  <div>
+    <h4>{{ a.title }}</h4>
+    <p>{{ a.body }}</p>
+    <small>{{ a.created_at|date:"d M Y" }}</small>
+  </div>
+{% empty %}<p>No announcements yet.</p>{% endfor %}
+<section class="hero">
+  <p class="eyebrow">Connect · Mentor · Grow</p>
+  <h1>
+    <span class="script">Connect</span>
+    <span class="serif">With Your</span>
+    <span class="light">Alumni</span>
+  </h1>
+  <p class="lead">Find mentors, discover jobs, and join events, all in one place for your college community.</p>
+  <div class="actions">
+    <a class="btn" href="/accounts/register/">Get Started →</a>
+    <a class="btn btn-outline" href="/accounts/login/">Login</a>
+  </div>
+  <div class="stats">
+    <div><strong>120+</strong><span>Alumni</span></div>
+    <div><strong>40</strong><span>Jobs Posted</span></div>
+    <div><strong>15</strong><span>Events</span></div>
+  </div>
+</section>
